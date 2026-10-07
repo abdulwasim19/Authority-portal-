@@ -1,82 +1,314 @@
-# RAAHAT — Authority Portal (M6)
+# 🏛️ Authority Portal
 
-React + Vite source for the Authority/Admin portal, restyled to match the
-RAAHAT AI brand system used by the Counsellor Portal (dark indigo sidebar,
-greeting topbar, icon KPI cards, tag-based case tables, confidence bars).
+> **A centralized web portal for authorities to manage, monitor, and respond to reported civic issues.**
 
-## Quick start
+The **Authority Portal** is a web-based management interface developed as part of a **Smart India Hackathon (SIH)** project focused on improving the process of reporting, tracking, and resolving civic issues.
 
-```bash
-npm install
-cp .env.example .env
-npm run dev
+The portal is designed for authorized personnel to view reported issues, monitor their status, and manage the resolution process from a centralized dashboard.
+
+---
+
+## 📌 About the Project
+
+In many cities, citizens face difficulties when reporting civic problems such as:
+
+* Road damage
+* Garbage accumulation
+* Streetlight failures
+* Water-related issues
+* Drainage problems
+* Public infrastructure problems
+
+The Authority Portal provides authorities with a centralized platform to manage these reported issues.
+
+```text
+Citizen
+   │
+   │ Report Civic Issue
+   ▼
+Civic Issue Platform
+   │
+   ▼
+Authority Portal
+   │
+   ├── View Issues
+   ├── Monitor Status
+   ├── Manage Issues
+   └── Resolve Issues
 ```
 
-Open the printed local URL. Demo accounts (see Login screen): `authority1`
-/ `admin1` (role = authority, full access) and `victim1` / `counsellor1`
-(blocked, for testing RBAC) — password `raahat` for all.
+The overall objective is to improve **transparency, accountability, and response time** in civic issue management.
 
-> This was written and syntax/import-checked with esbuild in an offline
-> sandbox (no network access to run `npm install` there), so please run
-> `npm run dev` locally as your first step and report anything that breaks
-> — happy to fix it in the next pass.
+---
 
-## What's real vs mocked
+# 🎯 Objectives
 
-Everything routes through `src/services/apiClient.js`. Every feature's
-`*Api.js` file (e.g. `src/features/cases/services/casesApi.js`) checks
-`VITE_USE_MOCKS`:
+The main objectives of the Authority Portal are:
 
-- `true` (default) → serves data from `src/mocks/` (fake but structurally
-  realistic, standing in for M3's backend).
-- `false` → calls the real backend at `VITE_API_BASE_URL`.
+* Provide authorities with a centralized dashboard
+* View reported civic issues
+* Track issue status
+* Manage reported complaints
+* Improve communication between citizens and authorities
+* Make issue resolution more organized
+* Improve transparency in the resolution process
 
-**To go live:** set `VITE_USE_MOCKS=false` in `.env` once M3 confirms the
-endpoints. No component code needs to change — that's the whole point of
-routing everything through the `*Api.js` layer.
+---
 
-Each `*Api.js` file has a comment showing the expected real endpoint
-shape — use these as the starting point for the M3↔M6 contract conversation
-in `docs/api-dependencies.md` (per your Member 6 handoff spec).
+# ✨ Key Features
 
-## Folder structure
+## 📊 Authority Dashboard
 
-Matches your team's M6 spec at the top level:
+A centralized dashboard designed to provide authorities with an overview of reported civic issues.
 
+Possible information includes:
+
+* Total reported issues
+* Pending issues
+* Issues in progress
+* Resolved issues
+* Recent reports
+
+---
+
+## 📝 Issue Management
+
+Authorities can manage reported civic issues through the portal.
+
+The system is designed to support activities such as:
+
+* Viewing reported issues
+* Reviewing issue details
+* Updating issue status
+* Managing issue resolution
+
+---
+
+## 🔎 Issue Tracking
+
+Issues can be monitored throughout their lifecycle.
+
+```text
+Reported
+   ↓
+Under Review
+   ↓
+In Progress
+   ↓
+Resolved
 ```
-src/
-  app/            entry point, providers
-  routes/         AppRoutes, ProtectedRoute (RBAC gate)
-  pages/          one file per screen (auth, dashboard, cases, analytics, reports, errors)
-  features/       feature-sliced: components/ hooks/ services/ per domain
-  components/     shared layout, feedback (loading/empty/error), common (badges)
-  services/       apiClient.js — the only place fetch() is called
-  mocks/          mock data + handlers, swappable for the real API
-  styles/         global.css — design tokens shared with Counsellor Portal
+
+This helps authorities understand which issues require attention.
+
+---
+
+## 🏢 Authority-Focused Interface
+
+The portal is designed specifically for administrative users rather than general citizens.
+
+The interface focuses on:
+
+* Clear information
+* Easy navigation
+* Issue management
+* Status tracking
+* Administrative workflow
+
+---
+
+# 🛠️ Technologies
+
+The project uses web technologies for developing the authority-facing portal.
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+
+### Backend
+
+The backend and application architecture depend on the technologies used by the main SIH project.
+
+### Development Tools
+
+* Visual Studio Code
+* Git
+* GitHub
+
+---
+
+# 🏗️ Project Architecture
+
+The Authority Portal is part of a larger civic issue reporting ecosystem.
+
+```text
+                    Civic Issue Platform
+                           │
+            ┌──────────────┴──────────────┐
+            │                             │
+        Citizen Side                 Authority Side
+            │                             │
+            ▼                             ▼
+     Report an Issue              Authority Portal
+            │                             │
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+                    Issue Management
+                           │
+                           ▼
+                       Resolution
 ```
 
-This pass consolidates some of the very granular files from the full spec
-(e.g. one `KpiCard.jsx` primitive behind `CriticalCasesCard.jsx` /
-`HighPriorityCasesCard.jsx` / etc., rather than fully separate markup per
-card) to keep the codebase honest about what has real logic in it. Split
-further as each piece grows real behavior.
+---
 
-## What M6 intentionally does NOT do here (per your spec)
+# 📂 Project Structure
 
-- No case-decision UI (Keep Priority / Escalate / Submit Review) — that's
-  the Counsellor Portal's (M5) job. The Case Review page here is
-  **read-only oversight**.
-- No client-side KPI math — every number in `mocks/mockData/aggregates.js`
-  is pre-aggregated once, mirroring what M3 should return already computed.
-  Components only display it.
-- No causal language in Analytics — trend text stays descriptive.
-- Session is in-memory only (no localStorage) until the team decides on a
-  real auth persistence strategy with M3/M1.
+```text
+Authority-portal-/
+│
+├── frontend/
+│
+├── backend/
+│
+├── assets/
+│
+├── README.md
+│
+└── ...
+```
 
-## Still to do before this is demo/production ready
+> The structure may change as the project continues to evolve.
 
-- [ ] Confirm real endpoint shapes with M3, flip `VITE_USE_MOCKS=false`
-- [ ] Add `react-router-dom` types/tests, wire up `docs/` files per spec
-- [ ] Accessibility pass (keyboard nav, focus states) beyond the basics here
-- [ ] Real auth/session persistence strategy
-- [ ] E2E tests (`e2e/authority-journey`, `e2e/rbac`) per your testing plan
+---
+
+# 🔄 Issue Resolution Workflow
+
+The portal follows a structured issue-resolution workflow:
+
+```text
+1. Citizen Reports Issue
+          ↓
+2. Issue Received
+          ↓
+3. Authority Reviews Issue
+          ↓
+4. Issue Assigned / Accepted
+          ↓
+5. Resolution Process
+          ↓
+6. Issue Resolved
+          ↓
+7. Status Updated
+```
+
+This workflow helps authorities maintain visibility over the complete lifecycle of a civic complaint.
+
+---
+
+# 🌐 Use Case
+
+### Example
+
+A citizen reports:
+
+> **"Streetlight is not working in my area."**
+
+The authority can:
+
+1. Receive the report
+2. Review the issue
+3. Check the location and details
+4. Assign the issue for action
+5. Update its status
+6. Resolve the problem
+7. Mark the issue as resolved
+
+This creates a more structured approach to civic issue management.
+
+---
+
+# 🎯 Smart India Hackathon
+
+This project was developed as part of the **Smart India Hackathon (SIH)** initiative.
+
+### Problem Area
+
+**Crowdsourced Civic Issue Reporting and Resolution System**
+
+The project focuses on connecting citizens and authorities through a digital platform for reporting and resolving civic issues.
+
+---
+
+# 🚀 Future Improvements
+
+The Authority Portal can be extended with:
+
+* Role-based authentication
+* Authority profiles
+* Advanced issue filtering
+* Search functionality
+* Location-based issue visualization
+* Interactive maps
+* Issue priority management
+* Image/document verification
+* Notifications
+* Analytics dashboard
+* Real-time status updates
+* Authority performance analytics
+* REST API integration
+
+---
+
+# 📚 What This Project Helped Me Learn
+
+Working on the Authority Portal provided practical experience with:
+
+* Frontend development
+* Web application structure
+* Git and GitHub
+* Team-based development
+* Repository management
+* Feature development
+* Debugging
+* Collaborative software development
+* Understanding real-world civic technology problems
+
+---
+
+# 👥 Project Context
+
+This repository represents the **Authority Portal** component of the larger civic issue reporting and resolution system.
+
+The complete solution consists of multiple components working together to connect citizens, authorities, and issue-resolution workflows.
+
+---
+
+# 👨‍💻 Developer
+
+**Abdul Wasim**
+
+B.Tech Computer Science & Engineering
+Raipur Institute of Technology (CSVTU)
+
+### Interests
+
+* Cloud Computing
+* AWS
+* DevOps
+* Python
+* Web Development
+* Software Engineering
+
+---
+
+# ⭐ Project Status
+
+**Smart India Hackathon Project — Active Development**
+
+The Authority Portal is being continuously improved as part of the larger civic issue reporting and resolution system.
+
+> **Technology should make problem reporting easier, resolution faster, and communities better.**
+
+---
